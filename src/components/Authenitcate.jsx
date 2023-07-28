@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function Authenticate({ token }) {
   const [successMessage, setSuccessMessage] = useState(null);
   const [error, setError] = useState(null);
+  const [username, setUsername] = useState(null)
 
   async function handleClick(e) {
     try {
@@ -16,6 +17,7 @@ export default function Authenticate({ token }) {
               })
       const result = await response.json();
       // console.log(result)
+      setUsername(result.data.username)
       setSuccessMessage(result.message)
     } catch (error) {
       setError(error.message);
@@ -26,6 +28,7 @@ export default function Authenticate({ token }) {
     <div>
       <h2>Authenticate</h2>
       {successMessage && <p>{successMessage}</p>}
+      {username && <p>Logged in as: {username}</p>}
       {error && <p>{error}</p>}
       <button onClick={handleClick}>Authenticate Token!</button>
     </div>
